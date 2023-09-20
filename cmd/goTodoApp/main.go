@@ -14,12 +14,24 @@ type TemplateRegistry struct {
 	templates *template.Template
 }
 
+type Item struct {
+	Name string
+}
+
+type Content struct {
+	Items []Item
+}
+
 func HomeHandler(c echo.Context) error {
+	Items := Content{
+		Items: []Item{
+			{Name: "Hello"},
+			{Name: "World"},
+		},
+	}
 	// Please note the the second parameter "home.html" is the template name and should
 	// be equal to the value stated in the {{ define }} statement in "view/home.html"
-	return c.Render(http.StatusOK, "index", map[string]interface{}{
-		"name": "some things",
-	})
+	return c.Render(http.StatusOK, "index", Items)
 }
 
 // Implement e.Renderer interface
@@ -32,7 +44,8 @@ func main() {
 	e.Use(middleware.Recover())
 	tmpl := template.New("index")
 	tmpl, _ = tmpl.Parse(view.Index)
-	tmpl, _ = tmpl.Parse(view.Title)
+	tmpl, _ = tmpl.Parse(view.Item)
+	tmpl, _ = tmpl.Parse(view.Items)
 	e.Renderer = &TemplateRegistry{
 		templates: tmpl,
 	}
