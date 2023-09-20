@@ -11,40 +11,10 @@ var Index = `<!DOCTYPE html>
     <body>
         <div class="container">
             Hello World
+            {{ template "title" .}}
         </div>
     </body>
 </html>`
-var Hello = `{{define "hello.html"}}
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <title>Boatswain Blog | {{index . "name"}}</title>
-    </head>
-    <body>
-      <h1>{{index . "msg"}}</h1>
-    </body>
-  </html>
-{{end}}`
-
-var Items = `{{define "items"}}
-{{range .Items}}
-    {{template "item" .}}
-{{end}}
-{{end}}`
-
-var ItemCount = `{{define "item-count"}}
-<div hx-trigger="click"
-    hx-post="/count/{{.Id}}"
-    hx-swap="outerHTML"
-    class="count">{{.Count}}</div>
-{{end}}`
-
-var Item = `{{define "item"}}
-<div class="item">
-    <div class="name">{{.Name}}</div>
-    {{template "item-count" .}}
-    <form hx-trigger="click" hx-delete="/item/{{.Id}}" hx-target="closest .item">
-        Delete
-    </form>
-</div>
+var Title = `{{define "title"}}
+  Boatswain Blog | {{index . "name"}}
 {{end}}`
