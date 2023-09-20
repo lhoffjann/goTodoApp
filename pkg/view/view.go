@@ -10,10 +10,22 @@ var Index = `<!DOCTYPE html>
     </head>
     <body>
         <div class="container">
-            {{template "items" . }}
+            Hello World
         </div>
     </body>
 </html>`
+var Hello = `{{define "hello.html"}}
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Boatswain Blog | {{index . "name"}}</title>
+    </head>
+    <body>
+      <h1>{{index . "msg"}}</h1>
+    </body>
+  </html>
+{{end}}`
+
 var Items = `{{define "items"}}
 {{range .Items}}
     {{template "item" .}}
